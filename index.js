@@ -7,14 +7,32 @@ const userRoute = require("./routes/users");
 const postRoute = require("./routes/posts");
 const categoryRoute = require("./routes/categories");
 const multer = require("multer");
+const cors = require("cors");
+
+// cors solution established
+const corsOption = {
+  origin: "*",
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  preflightContinue: true,
+  optionsSuccessStatus: 204,
+};
+
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
 
 dotenv.config();
 app.use(express.json());
 
+mongoose.set("strictQuery", false);
 mongoose
   .connect(process.env.MONGO_URL)
-  .then(console.log("Connected to MongoDB"))
-  .catch((err) => console.log(err));
+  .then(() => console.log("DB Connection Successful!"))
+  .catch((err) => {
+    console.log(err);
+  });
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -30,6 +48,7 @@ app.post("/api/upload", upload.single("file"), (req, res) => {
   res.status(200).json("File has been uploaded");
 });
 
+app.use(cors(corsOption));
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
