@@ -3,8 +3,11 @@ const app = express();
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const multer = require("multer");
+const cors = require("cors");
+const authRoute = require("./routes/auth");
 
 dotenv.config();
+app.use(express.json());
 
 mongoose
   .connect(process.env.MONGO_URL)
@@ -13,9 +16,7 @@ mongoose
     console.log(error);
   });
 
-app.use("/leewebs", (req, res) => {
-  console.log("Hey this is leewebs url!");
-});
+app.use("/api/auth", authRoute);
 
 app.listen("5000", () => {
   console.log("Backend is running!");
