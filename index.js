@@ -9,6 +9,7 @@ const postRoute = require("./routes/posts");
 const categoryRoute = require("./routes/categories");
 
 dotenv.config();
+// app.use(cors());
 app.use(express.json());
 
 mongoose
