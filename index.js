@@ -41,7 +41,7 @@ app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/categories", categoryRoute);
 
-app.get("/", (req, res) => {
+app.get("/https://adeniyiajibadesblog-netlify-app.onrender.com", (req, res) => {
   return res.status(200).json({ msg: "Welcome to homepage" });
 });
 
